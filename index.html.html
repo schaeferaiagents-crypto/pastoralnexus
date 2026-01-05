@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PASTORALNEXUS AI – AI Intelligence Systems für Unternehmen</title>
+    <meta name="description" content="Entwicklung und Implementierung von KI-basierten Chatbots und intelligenten Automatisierungslösungen für Unternehmen.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0a0a0a;
+            --color-surface: #1a1a1a;
+            --color-text: #e8e8e8;
+            --color-text-dim: #a0a0a0;
+            --color-accent: #d4af37;
+            --color-accent-dark: #b8932a;
+            --color-border: #2a2a2a;
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'IBM Plex Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 2rem;
+            color: var(--color-accent);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -0.01em;
+            color: var(--color-accent);
+        }
+
+        nav a {
+            color: var(--color-text-dim);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Hero Section */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--color-accent);
+            margin-bottom: 2rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero-description {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            max-width: 700px;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            color: var(--color-text-dim);
+        }
+
+        .accent-line {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-accent), transparent);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Services Section */
+        #leistungen {
+            background: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .service-item {
+            padding: 2rem;
+            background: rgba(212, 175, 55, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover {
+            border-color: var(--color-accent);
+            background: rgba(212, 175, 55, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .service-item h3 {
+            color: var(--color-accent);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-item p {
+            color: var(--color-text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* Process Section */
+        .process-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .process-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .process-number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--color-accent);
+            opacity: 0.5;
+            flex-shrink: 0;
+        }
+
+        .process-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .process-content p {
+            color: var(--color-text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        #kontakt {
+            background: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .contact-wrapper {
+            max-width: 600px;
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(212, 175, 55, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 2px;
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-info strong {
+            color: var(--color-accent);
+            font-weight: 500;
+            min-width: 80px;
+        }
+
+        .contact-info a {
+            color: var(--color-text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--color-accent);
+        }
+
+        .contact-form {
+            margin-top: 3rem;
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            color: var(--color-text-dim);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            padding: 1rem;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            border-radius: 2px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--color-accent);
+            color: var(--color-bg);
+            border: none;
+            padding: 1rem 2.5rem;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border-radius: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .submit-btn:hover {
+            background: var(--color-accent-dark);
+        }
+
+        /* Legal Sections */
+        #impressum,
+        #datenschutz {
+            border-top: 1px solid var(--color-border);
+        }
+
+        #datenschutz {
+            background: var(--color-surface);
+        }
+
+        .legal-content {
+            max-width: 800px;
+            line-height: 1.9;
+        }
+
+        .legal-content p {
+            margin-bottom: 1.5rem;
+            color: var(--color-text-dim);
+        }
+
+        .legal-content h3 {
+            color: var(--color-accent);
+            font-size: 1.2rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .legal-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .legal-content li {
+            margin-bottom: 0.5rem;
+            color: var(--color-text-dim);
+        }
+
+        .business-info {
+            background: rgba(212, 175, 55, 0.03);
+            border-left: 3px solid var(--color-accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .business-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-bg);
+            border-top: 1px solid var(--color-border);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            color: var(--color-text-dim);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--color-text-dim);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 0;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .services-grid,
+            .process-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content > * {
+            animation: fadeIn 1s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .hero-subtitle {
+            animation-delay: 0.2s;
+        }
+
+        h1 {
+            animation-delay: 0.4s;
+        }
+
+        .hero-description {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">PASTORALNEXUS AI</div>
+            <nav>
+                <a href="#leistungen">Leistungen</a>
+                <a href="#arbeitsweise">Arbeitsweise</a>
+                <a href="#kontakt">Kontakt</a>
+                <a href="#impressum">Impressum</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="accent-line"></div>
+                <p class="hero-subtitle">AI Intelligence Systems für Unternehmen</p>
+                <h1>PASTORALNEXUS AI</h1>
+                <p class="hero-description">
+                    Entwicklung und Implementierung von KI-basierten Chatbots und intelligenten Automatisierungslösungen zur Optimierung von Kundenkommunikation und Geschäftsprozessen. Wir helfen Unternehmen dabei, das Potenzial künstlicher Intelligenz effizient zu nutzen.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="leistungen">
+        <div class="container">
+            <div class="accent-line"></div>
+            <h2>Leistungen</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h3>KI-gestützte Website-Chatbots</h3>
+                    <p>Entwicklung intelligenter Chatbot-Lösungen, die Ihre Kunden rund um die Uhr betreuen und häufige Anfragen automatisch beantworten.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Automatisierte Kundenkommunikation</h3>
+                    <p>Implementierung von KI-Systemen zur Automatisierung Ihrer Kundenkommunikation über verschiedene Kanäle.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Individuelle AI-Systeme</h3>
+                    <p>Maßgeschneiderte KI-Lösungen, die exakt auf die spezifischen Anforderungen Ihres Unternehmens zugeschnitten sind.</p>
+                </div>
+                <div class="service-item">
+                    <h3>System-Integration</h3>
+                    <p>Nahtlose Integration von KI-Technologien in Ihre bestehenden Websites, CRM-Systeme und Geschäftsprozesse.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Wartung & Optimierung</h3>
+                    <p>Laufende Betreuung, Überwachung und kontinuierliche Verbesserung Ihrer KI-Systeme für optimale Ergebnisse.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="arbeitsweise">
+        <div class="container">
+            <div class="accent-line"></div>
+            <h2>So arbeiten wir</h2>
+            <div class="process-list">
+                <div class="process-item">
+                    <div class="process-number">01</div>
+                    <div class="process-content">
+                        <h3>Analyse der Anforderungen</h3>
+                        <p>Wir analysieren Ihre individuellen Bedürfnisse und identifizieren die optimalen Einsatzmöglichkeiten für KI-Technologien in Ihrem Unternehmen.</p>
+                    </div>
+                </div>
+                <div class="process-item">
+                    <div class="process-number">02</div>
+                    <div class="process-content">
+                        <h3>Individuelle Konzeption</h3>
+                        <p>Entwicklung eines maßgeschneiderten Konzepts, das perfekt auf Ihre Geschäftsprozesse und Ziele abgestimmt ist.</p>
+                    </div>
+                </div>
+                <div class="process-item">
+                    <div class="process-number">03</div>
+                    <div class="process-content">
+                        <h3>Technische Umsetzung</h3>
+                        <p>Professionelle Implementierung der KI-Lösung mit höchsten Qualitätsstandards und modernsten Technologien.</p>
+                    </div>
+                </div>
+                <div class="process-item">
+                    <div class="process-number">04</div>
+                    <div class="process-content">
+                        <h3>Laufende Betreuung</h3>
+                        <p>Kontinuierliche Optimierung, Updates und Support für eine dauerhaft optimale Performance Ihrer KI-Systeme.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="kontakt">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="accent-line"></div>
+                <h2>Kontakt</h2>
+                <p style="color: var(--color-text-dim); margin-bottom: 2rem;">
+                    Haben Sie Fragen zu unseren Leistungen oder möchten Sie ein unverbindliches Beratungsgespräch vereinbaren? Wir freuen uns auf Ihre Nachricht.
+                </p>
+                
+                <div class="contact-info">
+                    <p><strong>E-Mail:</strong> <a href="mailto:jonasschaefer1703@icloud.com">jonasschaefer1703@icloud.com</a></p>
+                </div>
+
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-Mail</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Nachricht</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Nachricht senden</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impressum Section -->
+    <section id="impressum">
+        <div class="container">
+            <div class="legal-content">
+                <div class="accent-line"></div>
+                <h2>Impressum</h2>
+                
+                <div class="business-info">
+                    <p><strong>PASTORALNEXUS AI</strong></p>
+                    <p>Inhaber: Jonas Schäfer</p>
+                    <p>Einzelunternehmen</p>
+                    <p>Adresse: Sandbühel 211, 6741 Raggal, Österreich</p>
+                    <p>E-Mail: <a href="mailto:jonasschaefer1703@icloud.com">jonasschaefer1703@icloud.com</a></p>
+                </div>
+
+                <p><strong>Verantwortlich für den Inhalt gemäß § 5 TMG / § 25 MedienG (AT):</strong><br>
+                Jonas Schäfer</p>
+
+                <h3>Haftungsausschluss</h3>
+                <p>Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.</p>
+
+                <h3>Urheberrecht</h3>
+                <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem österreichischen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Datenschutz Section -->
+    <section id="datenschutz">
+        <div class="container">
+            <div class="legal-content">
+                <div class="accent-line"></div>
+                <h2>Datenschutzerklärung</h2>
+                
+                <h3>1. Datenschutz auf einen Blick</h3>
+                <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen.</p>
+
+                <h3>2. Verantwortliche Stelle</h3>
+                <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
+                <div class="business-info">
+                    <p>PASTORALNEXUS AI</p>
+                    <p>Jonas Schäfer</p>
+                    <p>Sandbühel 211, 6741 Raggal, Österreich</p>
+                    <p>E-Mail: <a href="mailto:jonasschaefer1703@icloud.com">jonasschaefer1703@icloud.com</a></p>
+                </div>
+
+                <h3>3. Datenerfassung auf dieser Website</h3>
+                <p><strong>Allgemeine Nutzung der Website:</strong><br>
+                Beim Aufrufen dieser Website werden durch Ihren Browser automatisch Informationen an den Server unserer Website gesendet. Diese Informationen werden temporär in einem sogenannten Server-Logfile gespeichert. Dies umfasst:</p>
+                <ul>
+                    <li>IP-Adresse des anfragenden Rechners</li>
+                    <li>Datum und Uhrzeit des Zugriffs</li>
+                    <li>Name und URL der abgerufenen Datei</li>
+                    <li>Website, von der aus der Zugriff erfolgt (Referrer-URL)</li>
+                    <li>Verwendeter Browser und ggf. das Betriebssystem Ihres Rechners</li>
+                </ul>
+                <p>Die Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. f DSGVO auf Basis unseres berechtigten Interesses an der Verbesserung der Stabilität und Funktionalität unserer Website.</p>
+
+                <h3>4. Kontaktaufnahme</h3>
+                <p>Bei Kontaktaufnahme per E-Mail oder über das Kontaktformular werden die von Ihnen mitgeteilten Daten (Name, E-Mail-Adresse, Nachrichteninhalt) von uns gespeichert, um Ihre Anfrage zu bearbeiten. Die Daten werden gelöscht, sobald die Bearbeitung Ihrer Anfrage abgeschlossen ist und keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+
+                <h3>5. Ihre Rechte</h3>
+                <p>Sie haben das Recht:</p>
+                <ul>
+                    <li>gemäß Art. 15 DSGVO Auskunft über Ihre von uns verarbeiteten personenbezogenen Daten zu verlangen</li>
+                    <li>gemäß Art. 16 DSGVO unverzüglich die Berichtigung unrichtiger oder Vervollständigung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen</li>
+                    <li>gemäß Art. 17 DSGVO die Löschung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen</li>
+                    <li>gemäß Art. 18 DSGVO die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen</li>
+                    <li>gemäß Art. 20 DSGVO Ihre personenbezogenen Daten in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten</li>
+                    <li>gemäß Art. 77 DSGVO sich bei einer Aufsichtsbehörde zu beschweren</li>
+                </ul>
+
+                <h3>6. Widerruf Ihrer Einwilligung zur Datenverarbeitung</h3>
+                <p>Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.</p>
+
+                <h3>7. Datensicherheit</h3>
+                <p>Wir verwenden innerhalb des Website-Besuchs das verbreitete SSL-Verfahren (Secure Socket Layer) in Verbindung mit der jeweils höchsten Verschlüsselungsstufe, die von Ihrem Browser unterstützt wird.</p>
+
+                <h3>8. Aktualität und Änderung dieser Datenschutzerklärung</h3>
+                <p>Diese Datenschutzerklärung ist aktuell gültig und hat den Stand Januar 2026. Durch die Weiterentwicklung unserer Website oder aufgrund geänderter gesetzlicher bzw. behördlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung zu ändern.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 PASTORALNEXUS AI – Alle Rechte vorbehalten</p>
+                <div class="footer-links">
+                    <a href="#impressum">Impressum</a>
+                    <a href="#datenschutz">Datenschutz</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+               
